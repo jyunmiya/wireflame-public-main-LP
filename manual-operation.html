@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>操作マニュアル — LRT by 38 APPLICATION</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    a { color: #0284c7; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .site-header {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .brand { font-weight: 700; color: #2563eb; font-size: 15px; white-space: nowrap; }
+    .site-header nav a { margin-left: 20px; font-size: 13px; color: #475569; }
+    .site-header nav a.active { color: #0284c7; font-weight: 600; }
+
+    .layout { display: flex; max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; gap: 40px; }
+
+    .sidebar { width: 200px; flex-shrink: 0; }
+    .sidebar-inner { position: sticky; top: 72px; }
+    .sidebar h3 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
+    .sidebar ul { list-style: none; }
+    .sidebar ul li a {
+      display: block;
+      padding: 5px 8px;
+      font-size: 13px;
+      color: #475569;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .sidebar ul li a:hover { background: #f1f5f9; text-decoration: none; color: #0f172a; }
+    .sidebar ul li a.sub { padding-left: 20px; color: #64748b; font-size: 12px; }
+
+    .main { flex: 1; min-width: 0; }
+    .page-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #0284c7; margin-bottom: 8px; }
+    h1 { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .lead { font-size: 15px; color: #475569; margin-bottom: 36px; border-bottom: 1px solid #e2e8f0; padding-bottom: 24px; }
+
+    h2 { font-size: 18px; font-weight: 700; color: #0f172a; margin: 40px 0 12px; padding-top: 8px; border-top: 2px solid #e2e8f0; }
+    h2:first-of-type { margin-top: 0; border-top: none; }
+    h3 { font-size: 15px; font-weight: 700; color: #1e293b; margin: 24px 0 8px; }
+    h4 { font-size: 14px; font-weight: 700; color: #1e293b; margin: 16px 0 6px; }
+
+    p { margin-bottom: 12px; color: #334155; }
+    ul.plain { list-style: disc; padding-left: 20px; margin-bottom: 12px; }
+    ul.plain li { margin-bottom: 4px; color: #334155; font-size: 14px; }
+
+    code {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13px;
+      color: #0f172a;
+    }
+
+    .callout { border-radius: 10px; padding: 14px 16px; margin: 16px 0; font-size: 14px; }
+    .callout.info { background: #eff6ff; border-left: 3px solid #3b82f6; color: #1e40af; }
+    .callout.tip  { background: #f0fdf4; border-left: 3px solid #22c55e; color: #15803d; }
+    .callout.warn { background: #fffbeb; border-left: 3px solid #f59e0b; color: #92400e; }
+    .callout .callout-title { font-weight: 700; margin-bottom: 4px; }
+
+    /* screen layout diagram */
+    .screen-diagram {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 16px 0 24px;
+      font-size: 13px;
+      background: #fff;
+    }
+    .sd-topbar {
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .sd-topbar .brand-label { font-weight: 700; color: #2563eb; }
+    .sd-topbar .spacer { flex: 1; }
+    .sd-body { display: flex; height: 160px; }
+    .sd-sidebar { width: 160px; border-right: 1px solid #e2e8f0; padding: 12px; background: #fff; flex-shrink: 0; }
+    .sd-sidebar .label { font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; }
+    .sd-sidebar .item { background: #f1f5f9; border-radius: 6px; padding: 5px 8px; margin-bottom: 4px; font-size: 11px; color: #475569; }
+    .sd-canvas { flex: 1; background: #f8fafc; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+    .sd-canvas .block { background: #e2e8f0; border-radius: 6px; width: 80%; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #64748b; }
+
+    /* step list */
+    .steps { list-style: none; counter-reset: step; margin: 16px 0 20px; }
+    .steps li { counter-increment: step; display: flex; gap: 14px; margin-bottom: 16px; }
+    .steps li::before {
+      content: counter(step);
+      display: flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      background: #0284c7; color: #fff;
+      border-radius: 50%; font-size: 12px; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .steps li .step-body { flex: 1; }
+    .steps li .step-title { font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+
+    /* module grid */
+    .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0 20px; }
+    .module-chip {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .module-chip .mc-name { font-weight: 600; color: #1e293b; margin-bottom: 2px; }
+    .module-chip .mc-desc { font-size: 11px; color: #64748b; }
+
+    /* preset table */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 14px; }
+    th { text-align: left; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; font-weight: 600; color: #475569; }
+    td { border: 1px solid #e2e8f0; padding: 8px 12px; color: #334155; vertical-align: top; }
+
+    /* ai flow */
+    .ai-flow { display: flex; gap: 0; margin: 16px 0 24px; align-items: stretch; flex-wrap: wrap; }
+    .ai-step {
+      flex: 1;
+      min-width: 120px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      position: relative;
+    }
+    .ai-step + .ai-step { margin-left: 8px; }
+    .ai-step .num {
+      display: inline-block;
+      background: #0284c7;
+      color: #fff;
+      border-radius: 50%;
+      width: 20px; height: 20px;
+      font-size: 11px; font-weight: 700;
+      text-align: center; line-height: 20px;
+      margin-bottom: 6px;
+    }
+    .ai-step .title { font-weight: 700; color: #1e293b; margin-bottom: 2px; }
+    .ai-step .desc { font-size: 12px; color: #64748b; }
+
+    .page-footer { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; }
+    .footer-nav { display: flex; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 20px; font-size: 13px; }
+    .footer-nav a { color: #0284c7; }
+
+    @media (max-width: 680px) {
+      .layout { flex-direction: column; padding: 24px 16px 60px; }
+      .sidebar { width: 100%; }
+      .sidebar-inner { position: static; }
+      .module-grid { grid-template-columns: repeat(2, 1fr); }
+      .ai-flow { flex-direction: column; }
+      .ai-step + .ai-step { margin-left: 0; margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="brand">LRT by 38 APPLICATION</span>
+  <nav>
+    <a href="manual-setup.html">セットアップ</a>
+    <a href="manual-operation.html" class="active">操作マニュアル</a>
+    <a href="./">← アプリへ</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <h3>操作マニュアル</h3>
+      <ul>
+        <li><a href="#screen">画面構成</a></li>
+        <li><a href="#pages">ページ管理</a></li>
+        <li><a href="#presets" class="sub">プリセット一覧</a></li>
+        <li><a href="#canvas">モジュールの配置</a></li>
+        <li><a href="#edit">テキスト編集</a></li>
+        <li><a href="#preview">プレビュー</a></li>
+        <li><a href="#export">書き出し</a></li>
+        <li><a href="#ai">AI プロンプト生成</a></li>
+        <li><a href="#ai-tips" class="sub">活用のヒント</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <p class="page-eyebrow">Operation Manual</p>
+    <h1>操作マニュアル</h1>
+    <p class="lead">
+      LRT は、ドラッグ操作でページ構成を組み立て、クライアントと一緒に調整しながら、AI へのデザインプロンプトまで生成できるワイヤーフレームツールです。
+      このページでは基本的な操作の流れを説明します。
+    </p>
+
+    <!-- 画面構成 -->
+    <h2 id="screen">画面構成</h2>
+    <p>アプリは 3 つのエリアで構成されています。</p>
+
+    <div class="screen-diagram">
+      <div class="sd-topbar">
+        <span class="brand-label">LRT by 38 APPLICATION</span>
+        <span style="background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;">ページ 1</span>
+        <span style="color:#94a3b8">+ 追加</span>
+        <div class="spacer"></div>
+        <span style="color:#64748b">書き出し ▾</span>
+        <span style="color:#64748b;margin-left:10px">PC / SP</span>
+      </div>
+      <div class="sd-body">
+        <div class="sd-sidebar">
+          <div class="label">モジュール</div>
+          <div class="item">ヘッダー</div>
+          <div class="item">ヒーロー</div>
+          <div class="item">機能紹介</div>
+          <div class="item">料金プラン</div>
+        </div>
+        <div class="sd-canvas">
+          <div class="block">ヘッダー</div>
+          <div class="block">ヒーロー</div>
+          <div class="block">機能紹介</div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="plain">
+      <li><strong>トップバー（上部）</strong> — ページタブの切り替え・追加、書き出し、プレビュー切り替え</li>
+      <li><strong>左サイドバー</strong> — 配置できるモジュールの一覧</li>
+      <li><strong>キャンバス（中央）</strong> — 実際のページ構成。ここにモジュールを並べます</li>
+    </ul>
+
+    <!-- ページ管理 -->
+    <h2 id="pages">ページの作成・管理</h2>
+
+    <h3>新しいページを作る</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-body">
+          <div class="step-title">「＋ 追加」をクリック</div>
+          トップバー左側のページタブ横にある「＋ 追加」ボタンをクリックします。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">白紙 or プリセットを選択</div>
+          「白紙で作成」または業種・用途別のプリセットを選びます。プリセットを選ぶと、構成とサンプルテキストがあらかじめ入った状態で始められます。
+        </div>
+      </li>
+    </ol>
+
+    <h3>ページ名を変更する</h3>
+    <p>タブ上のページ名を<strong>ダブルクリック</strong>すると編集モードになります。入力後 Enter または他の場所をクリックで確定します。</p>
+
+    <h3>ページを削除する</h3>
+    <p>タブにマウスを乗せると右側に ✕ アイコンが表示されます。クリックで削除できます（2 ページ以上ある場合のみ表示）。</p>
+
+    <h3 id="presets">プリセット一覧</h3>
+    <table>
+      <thead><tr><th>プリセット</th><th>主な構成</th><th>向いている用途</th></tr></thead>
+      <tbody>
+        <tr><td>コーポレートサイト</td><td>ヘッダー・ヒーロー・特徴・実績・フォーム・フッター</td><td>企業・会社サイトの提案</td></tr>
+        <tr><td>リクルートサイト</td><td>ヘッダー・ヒーロー・仕事内容・社員紹介・選考フロー</td><td>採用ページの構成確認</td></tr>
+        <tr><td>ランディングページ</td><td>ヘッダー・ヒーロー・機能・料金・FAQ・CTA</td><td>LP 全体のたたき台</td></tr>
+        <tr><td>ブログ</td><td>ヘッダー・記事一覧・カテゴリ・サイドバー・フッター</td><td>ブログ・メディアサイト</td></tr>
+        <tr><td>飲食・フード</td><td>ヘッダー・ヒーロー・ギャラリー・メニュー・口コミ</td><td>飲食店・カフェ・デリバリー</td></tr>
+        <tr><td>医療・クリニック</td><td>ヘッダー・ヒーロー・実績数値・診療内容・よくある質問</td><td>クリニック・整体・医療</td></tr>
+        <tr><td>IT・SaaS</td><td>ヘッダー・ヒーロー・ロゴ一覧・機能・料金・比較表</td><td>SaaS プロダクト・ツール紹介</td></tr>
+        <tr><td>美容・ファッション</td><td>ヘッダー・ヒーロー・ギャラリー・メニュー・料金・口コミ</td><td>サロン・アパレル・美容</td></tr>
+        <tr><td>不動産・建設</td><td>ヘッダー・ヒーロー・実績・物件一覧・お問い合わせ</td><td>不動産・建設・リフォーム</td></tr>
+        <tr><td>教育・スクール</td><td>ヘッダー・ヒーロー・特徴・受講フロー・料金・FAQ</td><td>スクール・オンライン講座・塾</td></tr>
+        <tr><td>EC・小売</td><td>ヘッダー・ヒーロー・商品一覧・レビュー・ニュースレター</td><td>EC サイト・ショップ</td></tr>
+      </tbody>
+    </table>
+
+    <!-- モジュール配置 -->
+    <h2 id="canvas">モジュールの配置</h2>
+    <p>左サイドバーのモジュールをキャンバス上にドラッグ＆ドロップして配置します。</p>
+
+    <ul class="plain">
+      <li>モジュールをドラッグして、既存のブロックの上下に挿入できます</li>
+      <li>配置済みのモジュールもドラッグで順番を入れ替えられます</li>
+      <li>右端の ✕ ボタンでモジュールを削除できます</li>
+    </ul>
+
+    <div class="callout tip">
+      <div class="callout-title">プリセットをたたき台にする</div>
+      プリセットから始めると、構成とサンプルテキストが入った状態でスタートできます。不要なモジュールを削除・追加しながら調整するのが最も効率的です。
+    </div>
+
+    <h3>主なモジュール</h3>
+    <div class="module-grid">
+      <div class="module-chip"><div class="mc-name">ヘッダー</div><div class="mc-desc">ロゴ・ナビゲーション</div></div>
+      <div class="module-chip"><div class="mc-name">ヒーロー</div><div class="mc-desc">大きな見出しと CTA</div></div>
+      <div class="module-chip"><div class="mc-name">機能カード</div><div class="mc-desc">3列の特徴紹介</div></div>
+      <div class="module-chip"><div class="mc-name">実績数値</div><div class="mc-desc">数字で示す強み</div></div>
+      <div class="module-chip"><div class="mc-name">料金プラン</div><div class="mc-desc">プラン比較</div></div>
+      <div class="module-chip"><div class="mc-name">FAQ</div><div class="mc-desc">よくある質問</div></div>
+      <div class="module-chip"><div class="mc-name">お客様の声</div><div class="mc-desc">テスティモニアル</div></div>
+      <div class="module-chip"><div class="mc-name">CTA バナー</div><div class="mc-desc">行動喚起セクション</div></div>
+      <div class="module-chip"><div class="mc-name">お問い合わせ</div><div class="mc-desc">入力フォーム</div></div>
+      <div class="module-chip"><div class="mc-name">ギャラリー</div><div class="mc-desc">画像グリッド</div></div>
+      <div class="module-chip"><div class="mc-name">商品カード</div><div class="mc-desc">EC 向け商品一覧</div></div>
+      <div class="module-chip"><div class="mc-name">フッター</div><div class="mc-desc">リンク・コピーライト</div></div>
+    </div>
+
+    <!-- テキスト編集 -->
+    <h2 id="edit">テキストの編集</h2>
+    <p>キャンバス上のモジュールをクリックすると、テキストフィールドが表示されます。その場で直接入力・編集できます。</p>
+
+    <ul class="plain">
+      <li>ヒーローの見出し・サブテキスト・CTA ボタンテキストなどを編集できます</li>
+      <li>機能カードの各カードタイトル・説明文も個別に編集できます</li>
+      <li>入力したテキストは AI プロンプト生成にそのまま反映されます</li>
+    </ul>
+
+    <div class="callout info">
+      <div class="callout-title">打ち合わせ中の活用</div>
+      クライアントと話しながらその場でテキストを書き換えることで、「こういう言葉はどうですか？」という会話をリアルタイムに進められます。
+    </div>
+
+    <!-- プレビュー -->
+    <h2 id="preview">プレビュー切り替え</h2>
+    <p>トップバー右上のコントロールで、PC・SP（スマートフォン）の表示サイズを切り替えられます。</p>
+
+    <ul class="plain">
+      <li><strong>PC</strong>：デスクトップ幅（1440px 相当）でのレイアウトを確認</li>
+      <li><strong>SP</strong>：モバイル幅（375px 相当）でのレイアウトを確認</li>
+    </ul>
+
+    <!-- 書き出し -->
+    <h2 id="export">書き出し</h2>
+    <p>トップバー右上の「書き出し」ボタンからメニューが開きます。</p>
+
+    <table>
+      <thead><tr><th>形式</th><th>内容</th><th>使い方</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>HTML（このページ）</td>
+          <td>表示中のページをスタイル付き HTML ファイルとして書き出し</td>
+          <td>クライアントへのファイル共有、確認用</td>
+        </tr>
+        <tr>
+          <td>HTML（全ページ）</td>
+          <td>全ページを ZIP でまとめて書き出し</td>
+          <td>複数ページをまとめて共有</td>
+        </tr>
+        <tr>
+          <td>PDF</td>
+          <td>表示中のページを PDF として書き出し</td>
+          <td>印刷・メール添付</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- AI プロンプト -->
+    <h2 id="ai">AI プロンプト生成</h2>
+    <p>
+      「書き出し」メニューの「AI画像プロンプトを生成」から、ChatGPT などの画像生成 AI に渡せるプロンプトを自動生成できます。
+      組み立てたワイヤーフレームの構成をもとに、デザインイメージを AI に生成させるための英語プロンプトを出力します。
+    </p>
+
+    <div class="ai-flow">
+      <div class="ai-step"><div class="num">1</div><div class="title">構成を作る</div><div class="desc">モジュールを並べ、テキストを入れる</div></div>
+      <div class="ai-step"><div class="num">2</div><div class="title">デザインを指定</div><div class="desc">ターゲット・カラー・雰囲気・フォントを設定</div></div>
+      <div class="ai-step"><div class="num">3</div><div class="title">プロンプト生成</div><div class="desc">「プロンプトを生成」ボタンをクリック</div></div>
+      <div class="ai-step"><div class="num">4</div><div class="title">AI に貼り付け</div><div class="desc">コピーして ChatGPT 等に貼り付け</div></div>
+    </div>
+
+    <h3>指定できる項目</h3>
+    <table>
+      <thead><tr><th>項目</th><th>内容</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td>出力デバイス</td><td>PC のみ / SP のみ / PC+SP 2枚</td><td>「PC + SP 2枚」で両方同時生成</td></tr>
+        <tr><td>ターゲット</td><td>想定するユーザー・顧客層（任意）</td><td>30〜40代の働く女性</td></tr>
+        <tr><td>カラーイメージ</td><td>メインカラーやトーン（任意）</td><td>ネイビーとホワイト、ゴールドアクセント</td></tr>
+        <tr><td>雰囲気・トーン</td><td>12種から複数選択（任意）</td><td>モダン + プロフェッショナル</td></tr>
+        <tr><td>フォントの印象</td><td>4種から選択</td><td>サンセリフ細め（すっきり・軽快）</td></tr>
+        <tr><td>その他の指示</td><td>自由記述（任意）</td><td>丸みのあるカード、アイコンを多用</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-title">著作権・商標について</div>
+      生成プロンプトには、実在のブランドロゴ・商標・著作キャラクター・実在の人物の肖像を含む画像を生成しないよう、ガードレールが含まれています。
+      ただし、画像生成 AI の出力内容については必ずご自身でご確認ください。
+    </div>
+
+    <h3 id="ai-tips">活用のヒント</h3>
+
+    <h4>同じ構成で複数のデザインを試す</h4>
+    <p>
+      カラーや雰囲気を変えて複数回生成することで、「構成は同じでも全然違う雰囲気」のデザインイメージを複数パターン作れます。
+      打ち合わせの場で「A 案・B 案」として並べて見せると、クライアントの好みを引き出しやすくなります。
+    </p>
+
+    <h4>テキストをしっかり入れると精度が上がる</h4>
+    <p>
+      ヒーローの見出し・機能カードのタイトル・料金プランの名称など、モジュールにテキストを入れておくと、それがプロンプトに反映され、AI が生成するデザインの内容がより具体的になります。
+    </p>
+
+    <h4>PC+SP 2枚モードの使い方</h4>
+    <p>
+      「PC + SP 2枚」を選ぶと PC 用と SP 用のプロンプトが別々に生成されます。それぞれのコピーボタンで個別にコピーして、画像生成 AI に順番に貼り付けてください。
+      1 枚に両方を並べるより、各デバイスのレイアウトが明確に出力されます。
+    </p>
+  </main>
+</div>
+
+<div class="page-footer">
+  <div class="footer-nav">
+    <a href="manual-setup.html">← セットアップガイド</a>
+    <a href="./">アプリへ →</a>
+  </div>
+</div>
+
+</body>
+</html>

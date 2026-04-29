@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>セットアップガイド — LRT by 38 APPLICATION</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    a { color: #0284c7; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* header */
+    .site-header {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .brand {
+      font-weight: 700;
+      color: #2563eb;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+    .site-header nav a {
+      margin-left: 20px;
+      font-size: 13px;
+      color: #475569;
+    }
+    .site-header nav a.active { color: #0284c7; font-weight: 600; }
+
+    /* layout */
+    .layout { display: flex; max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; gap: 40px; }
+
+    /* sidebar */
+    .sidebar { width: 200px; flex-shrink: 0; }
+    .sidebar-inner { position: sticky; top: 72px; }
+    .sidebar h3 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
+    .sidebar ul { list-style: none; }
+    .sidebar ul li a {
+      display: block;
+      padding: 5px 8px;
+      font-size: 13px;
+      color: #475569;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .sidebar ul li a:hover { background: #f1f5f9; text-decoration: none; color: #0f172a; }
+    .sidebar ul li a.sub { padding-left: 20px; color: #64748b; font-size: 12px; }
+
+    /* main */
+    .main { flex: 1; min-width: 0; }
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0284c7;
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .lead { font-size: 15px; color: #475569; margin-bottom: 36px; border-bottom: 1px solid #e2e8f0; padding-bottom: 24px; }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 40px 0 12px;
+      padding-top: 8px;
+      border-top: 2px solid #e2e8f0;
+    }
+    h2:first-of-type { margin-top: 0; border-top: none; }
+    h3 { font-size: 15px; font-weight: 700; color: #1e293b; margin: 24px 0 8px; }
+
+    p { margin-bottom: 12px; color: #334155; }
+
+    /* step list */
+    .steps { list-style: none; counter-reset: step; margin: 16px 0 20px; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .steps li::before {
+      content: counter(step);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: #0284c7;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .steps li .step-body { flex: 1; }
+    .steps li .step-title { font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+
+    /* code */
+    code {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13px;
+      color: #0f172a;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 16px 20px;
+      overflow-x: auto;
+      margin: 12px 0 20px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* callout */
+    .callout {
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .callout.info { background: #eff6ff; border-left: 3px solid #3b82f6; color: #1e40af; }
+    .callout.tip  { background: #f0fdf4; border-left: 3px solid #22c55e; color: #15803d; }
+    .callout.warn { background: #fffbeb; border-left: 3px solid #f59e0b; color: #92400e; }
+    .callout .callout-title { font-weight: 700; margin-bottom: 4px; }
+
+    /* method card */
+    .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px; }
+    .method-card {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      background: #fff;
+    }
+    .method-card.primary { border-color: #0284c7; background: #f0f9ff; }
+    .method-card .mc-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      margin-bottom: 8px;
+    }
+    .method-card.primary .mc-tag { background: #0284c7; color: #fff; }
+    .method-card h3 { font-size: 14px; margin: 0 0 6px; }
+    .method-card p { font-size: 13px; margin-bottom: 0; }
+
+    /* table */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 14px; }
+    th { text-align: left; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; font-weight: 600; color: #475569; }
+    td { border: 1px solid #e2e8f0; padding: 8px 12px; color: #334155; vertical-align: top; }
+
+    /* footer */
+    .page-footer { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; }
+    .footer-nav { display: flex; justify-content: space-between; border-top: 1px solid #e2e8f0; padding-top: 20px; font-size: 13px; }
+    .footer-nav a { color: #0284c7; }
+
+    @media (max-width: 680px) {
+      .layout { flex-direction: column; padding: 24px 16px 60px; }
+      .sidebar { width: 100%; }
+      .sidebar-inner { position: static; }
+      .method-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="brand">LRT by 38 APPLICATION</span>
+  <nav>
+    <a href="manual-setup.html" class="active">セットアップ</a>
+    <a href="manual-operation.html">操作マニュアル</a>
+    <a href="./">← アプリへ</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <h3>セットアップ</h3>
+      <ul>
+        <li><a href="#overview">はじめに</a></li>
+        <li><a href="#methods">2通りの使い方</a></li>
+        <li><a href="#local">① ローカルで使う</a></li>
+        <li><a href="#nodejs" class="sub">Node.js インストール</a></li>
+        <li><a href="#start" class="sub">起動方法</a></li>
+        <li><a href="#server">② サーバーに公開</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main">
+    <p class="page-eyebrow">Setup Guide</p>
+    <h1>セットアップガイド</h1>
+    <p class="lead">
+      このページでは、LRT by 38 APPLICATION を使い始めるまでの手順を説明します。
+      「難しい」というよりは「手順がある」という感じです。順を追って進めれば、Web 制作の知識がある方であれば問題なく使い始められます。
+    </p>
+
+    <!-- はじめに -->
+    <h2 id="overview">はじめに</h2>
+    <p>
+      LRT は React で作られたブラウザアプリです。インターネット接続は不要で、手元の PC だけで完結します。
+      使い方は大きく 2 通りです。
+    </p>
+    <div class="callout info">
+      <div class="callout-title">対象読者</div>
+      HTML や CSS を触ったことがある、FTP でのファイルアップロード経験がある、くらいの方を想定しています。
+      コードを書く必要はありません。
+    </div>
+
+    <!-- 2通りの使い方 -->
+    <h2 id="methods">2通りの使い方</h2>
+    <div class="method-grid">
+      <div class="method-card primary">
+        <span class="mc-tag">おすすめ</span>
+        <h3>① ローカルで使う</h3>
+        <p>自分の PC でそのまま開く。サーバー契約不要。打ち合わせ持ち込みに最適。</p>
+      </div>
+      <div class="method-card">
+        <span class="mc-tag">URL共有したい場合</span>
+        <h3>② サーバーに公開</h3>
+        <p>レンタルサーバーにアップロードして URL で共有。クライアントとの画面共有に便利。</p>
+      </div>
+    </div>
+
+    <!-- ローカル -->
+    <h2 id="local">① ローカルで使う</h2>
+    <p>ローカルで使うには <strong>Node.js</strong> のインストールが必要です。一度インストールすれば、以降は <code>start.bat</code> をダブルクリックするだけです。</p>
+
+    <h3 id="nodejs">Node.js のインストール</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-body">
+          <div class="step-title">Node.js 公式サイトにアクセス</div>
+          <a href="https://nodejs.org" target="_blank" rel="noopener">https://nodejs.org</a> を開き、<strong>LTS 版</strong>（推奨版）をダウンロードします。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">インストーラーを実行</div>
+          ダウンロードした <code>.msi</code>（Windows）または <code>.pkg</code>（Mac）ファイルを開き、画面の指示に従ってインストールします。すべてデフォルト設定で進めて問題ありません。所要時間は 5 分程度です。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">インストールの確認（任意）</div>
+          コマンドプロンプト（Windows）またはターミナル（Mac）を開き、以下を入力してバージョンが表示されれば完了です。
+          <pre>node -v</pre>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="callout-title">一度だけの作業です</div>
+      Node.js は一度インストールすれば、以後は不要です。別のプロジェクトでも同じ Node.js が使えます。
+    </div>
+
+    <h3 id="start">LRT の起動</h3>
+    <ol class="steps">
+      <li>
+        <div class="step-body">
+          <div class="step-title">フォルダを展開</div>
+          ダウンロードした ZIP を展開し、任意の場所に置きます。フォルダ名やパスは何でも構いません。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">start.bat をダブルクリック</div>
+          フォルダ内の <code>start.bat</code> をダブルクリックします。黒いコマンドウィンドウが開き、しばらくするとブラウザが自動的に起動します。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">ブラウザでアプリを開く</div>
+          自動で開かない場合は、ブラウザのアドレスバーに <code>http://localhost:3000</code> と入力してください。
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout warn">
+      <div class="callout-title">コマンドウィンドウを閉じないでください</div>
+      黒いウィンドウがサーバーとして動いています。閉じるとアプリも止まります。使い終わったら、そのウィンドウを閉じて終了してください。
+    </div>
+
+    <h3>終了方法</h3>
+    <p>黒いコマンドウィンドウで <code>Ctrl + C</code> を押すか、ウィンドウ右上の ✕ で閉じてください。</p>
+
+    <!-- サーバー公開 -->
+    <h2 id="server">② レンタルサーバーに公開する</h2>
+    <p>URL で共有したい場合は、<code>dist/</code> フォルダの中身をレンタルサーバーにアップロードします。</p>
+
+    <ol class="steps">
+      <li>
+        <div class="step-body">
+          <div class="step-title">dist フォルダを確認</div>
+          ダウンロードしたファイルに <code>dist/</code> フォルダが含まれています。これが公開用のファイル一式です。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">FTP ソフトでアップロード</div>
+          FileZilla などの FTP ソフトを使い、<code>dist/</code> フォルダの<strong>中身</strong>をサーバーのドキュメントルート（<code>public_html/</code> など）にアップロードします。
+        </div>
+      </li>
+      <li>
+        <div class="step-body">
+          <div class="step-title">URL で確認</div>
+          アップロード先の URL をブラウザで開き、アプリが表示されれば完了です。
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout info">
+      <div class="callout-title">dist フォルダの中身について</div>
+      <code>dist/</code> フォルダには <code>index.html</code>、JS/CSS ファイル、マニュアルページが含まれています。フォルダごとではなく、<strong>中身だけ</strong>をアップロードしてください。
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>方法</th><th>必要なもの</th><th>向いている使い方</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ローカル</td>
+          <td>Node.js（無料）</td>
+          <td>打ち合わせ持ち込み、個人利用</td>
+        </tr>
+        <tr>
+          <td>サーバー公開</td>
+          <td>レンタルサーバー、FTP ソフト</td>
+          <td>URL 共有、クライアントとの共同確認</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- FAQ -->
+    <h2 id="faq">よくある質問</h2>
+
+    <h3>ブラウザが自動で開かない</h3>
+    <p><code>http://localhost:3000</code> を手動でアドレスバーに入力してください。コマンドウィンドウが起動してから 5〜10 秒ほど待ってから試してください。</p>
+
+    <h3>「古い画面が表示される」</h3>
+    <p>ブラウザのキャッシュが残っている場合があります。<code>Ctrl + Shift + R</code>（Mac は <code>Cmd + Shift + R</code>）でハードリロードしてください。</p>
+
+    <h3>ポート 3000 が使用中と出る</h3>
+    <p>他のアプリが 3000 番ポートを使っている場合があります。他のアプリを終了してから <code>start.bat</code> を再実行してください。</p>
+
+    <h3>Mac で動かない</h3>
+    <p><code>start.bat</code> は Windows 用です。Mac の場合はターミナルを開き、フォルダ内で以下を実行してください。</p>
+    <pre>node server.js</pre>
+  </main>
+</div>
+
+<div class="page-footer">
+  <div class="footer-nav">
+    <span></span>
+    <a href="manual-operation.html">操作マニュアルへ →</a>
+  </div>
+</div>
+
+</body>
+</html>
